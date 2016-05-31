@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>登录界面</title>
+<link rel="stylesheet" type="text/css" href="css/login_style.css" />
+<script src="js/jquery-1.7.1.min.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src="../common/common.js"></script>
+
+
+<script type="text/javascript">
+	$(function() {
+		document.onkeydown = function(e) {
+			var theEvent = window.event || e;
+			var code = theEvent.keyCode || theEvent.which;
+			if (code == 13) {
+				document.getElementById("loginbtn").click();
+			}
+		};
+	});
+
+	function login() {
+		username = $("#username").val();
+		password = $("#password").val();
+		url = platform_context_path + "sso/account/login";
+
+		var data = {
+			user_name : username,
+			pass_word : password
+
+		};
+		callUrlAction('post', 3, data, url, callLoginBack);
+	}
+	function callLoginBack(result, msg) {
+		if (msg == 'success') {
+			$.cookie('user_name', $("#username").val());
+			window.open(platform_context_path
+					+ 'hospital_html_v2/function_home.html?', '_self');
+		} else {
+			alert(result);
+		}
+	}
+</script>
+</head>
+<body>
+	<div class="login-div">
+		<div class="top-header">
+			<div class="top-logo">
+				<a href="" class="logo-link"><img src="imgs/logo.png" alt="">
+				</a> <a href=""><h1 class="title-font">
+						个人博客<span class="small-font">登录</span>
+					</h1></a>
+			</div>
+		</div>
+		<div class="center-content">
+			<div class="login-box overflowH">
+				<div class="left-banner-l">
+					<img src="imgs/left_login.png" alt="">
+				</div>
+				<div class="right-login-box">
+					<div class="l-text-box">
+						<form action="">
+							<p class="text-l-font">登录</p>
+							<div>
+								<ul class="input-box-login">
+									<li class="input-border-btm">
+										<!-- <label for="loginName" class="ph-login">请输入帐号</label> -->
+										<input type="text" name="" value="" class="login-zh"
+										id="username" placeholder="请输入帐号">
+									</li>
+									<li class="input-li">
+										<!-- <label for="loginPwd" class="ph-login">请输入密码</label>  -->
+										<input type="password" name="" value="" class="login-pwd"
+										id="password" placeholder="请输入密码">
+									</li>
+								</ul>
+							</div>
+							<p class="l-btn-style">
+								<input id=loginbtn class="button-login" type="button" value="登录" onclick="login();">
+							</p>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="btm-footer">
+			<p class="login-footer">arealy.本人所有</p>
+		</div>
+	</div>
+</body>
+</html>
